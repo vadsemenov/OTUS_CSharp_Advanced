@@ -11,11 +11,9 @@ public class SimpleStore : IDisposable
     public void Set(string key, byte[] value)
     {
         _lock.EnterWriteLock();
-
         try
         {
-            _store.Add(key, value);
-
+            _store[key] = value;
             Interlocked.Increment(ref _setCount);
         }
         finally
@@ -27,21 +25,17 @@ public class SimpleStore : IDisposable
     public byte[]? Get(string key)
     {
         _lock.EnterReadLock();
-
         try
         {
             var value = _store.GetValueOrDefault(key);
-
             Interlocked.Increment(ref _getCount);
-
             return value;
         }
         finally
         {
-            _lock.EnterReadLock();
+            _lock.ExitReadLock();
         }
     }
-
 
     public void Delete(string key)
     {
@@ -49,7 +43,6 @@ public class SimpleStore : IDisposable
         try
         {
             _store.Remove(key);
-
             Interlocked.Increment(ref _deleteCount);
         }
         finally
@@ -59,12 +52,7 @@ public class SimpleStore : IDisposable
     }
 
     public (long setCount, long getCount, long deleteCount) GetStatistics()
-    {
-        return (_setCount, _getCount, _deleteCount);
-    }
+        => (_setCount, _getCount, _deleteCount);
 
-    public void Dispose()
-    {
-        _lock.Dispose();
-    }
+    public void Dispose() => _lock.Dispose();
 }
