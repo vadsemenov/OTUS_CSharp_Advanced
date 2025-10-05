@@ -1,6 +1,3 @@
-using AllocationWork.App;
-using Xunit;
-
 namespace AllocationWork.App.Tests;
 
 public class CommandParserTests

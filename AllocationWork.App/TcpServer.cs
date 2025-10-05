@@ -1,15 +1,15 @@
 ﻿using System.Buffers;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
 namespace AllocationWork.App;
 
-public class TcpServer : IDisposable
+public class TcpServer : IAsyncDisposable
 {
     private Socket? _socket;
-    private readonly List<ClientHandler> _connectedClients = new();
-    private readonly object _clientsLock = new();
+    private readonly ConcurrentBag<ClientHandler> _connectedClients = new();
     private const string IpAddress = "127.0.0.1";
     private const int Port = 8081;
 
@@ -33,29 +33,24 @@ public class TcpServer : IDisposable
 
                     // Создаем и запускаем обработчик клиента
                     var clientHandler = new ClientHandler(clientSocket);
-                    lock (_clientsLock)
-                    {
-                        _connectedClients.Add(clientHandler);
+                    _connectedClients.Add(clientHandler);
 
-                        Console.WriteLine($"Создано новое подключение с клиентом. Всего подключений: {_connectedClients.Count}");
-                    }
+                    Console.WriteLine(
+                        $"Создано новое подключение с клиентом. Всего подключений: {_connectedClients.Count}");
 
                     // Запускаем обработку клиента в отдельной задаче
                     _ = Task.Run(async () =>
                     {
                         try
                         {
-                            await clientHandler.ProcessAsync();
+                            await clientHandler.ProcessAsync(cancellationToken);
                         }
                         finally
                         {
                             // Удаляем клиента из списка при отключении
-                            lock (_clientsLock)
-                            {
-                                _connectedClients.Remove(clientHandler);
+                            _connectedClients.TryTake(out clientHandler);
 
-                                Console.WriteLine($"Клиент отключен. Всего подключений: {_connectedClients.Count}");
-                            }
+                            Console.WriteLine($"Клиент отключен. Всего подключений: {_connectedClients.Count}");
                         }
                     }, cancellationToken);
                 }
@@ -74,27 +69,20 @@ public class TcpServer : IDisposable
             Console.WriteLine(exception);
             throw;
         }
-        finally
-        {
-            await DisconnectAllClientsAsync();
-        }
     }
 
     private async Task DisconnectAllClientsAsync()
     {
-        List<ClientHandler> clientsToDisconnect;
-        lock (_clientsLock)
-        {
-            clientsToDisconnect = new List<ClientHandler>(_connectedClients);
-            _connectedClients.Clear();
-        }
-
-        var disconnectTasks = clientsToDisconnect.Select(client => client.DisconnectAsync());
+        var disconnectTasks = _connectedClients.Select(client => client.DisconnectAsync());
         await Task.WhenAll(disconnectTasks);
+
+        _connectedClients.Clear();
     }
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
+        await DisconnectAllClientsAsync();
+
         _socket?.Dispose();
     }
 }
@@ -102,7 +90,7 @@ public class TcpServer : IDisposable
 // Класс для обработки отдельного клиента
 public class ClientHandler(Socket clientSocket)
 {
-    public async Task ProcessAsync()
+    public async Task ProcessAsync(CancellationToken cancellationToken)
     {
         try
         {
@@ -111,7 +99,7 @@ public class ClientHandler(Socket clientSocket)
             var welcomeBytes = Encoding.UTF8.GetBytes(welcomeMessage);
             await clientSocket.SendAsync(welcomeBytes, SocketFlags.None);
 
-            await ReceiveDataAsync();
+            await ReceiveDataAsync(cancellationToken);
         }
         catch (Exception ex)
         {
@@ -119,7 +107,7 @@ public class ClientHandler(Socket clientSocket)
         }
     }
 
-    private async Task ReceiveDataAsync()
+    private async Task ReceiveDataAsync(CancellationToken cancellationToken)
     {
         var buffer = ArrayPool<byte>.Shared.Rent(200);
 
@@ -127,6 +115,11 @@ public class ClientHandler(Socket clientSocket)
         {
             while (clientSocket.Connected)
             {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 var byteCount = await clientSocket.ReceiveAsync(buffer, SocketFlags.None);
 
                 if (byteCount == 0)
@@ -158,17 +151,17 @@ public class ClientHandler(Socket clientSocket)
 
     private void PrintCommandsToConsole(CommandParts commands)
     {
-        Console.WriteLine($"[Клиент {clientSocket.RemoteEndPoint}] Команда {commands.Command}, ключ {commands.Key}, значение {commands.Value}");
+        Console.WriteLine(
+            $"[Клиент {clientSocket.RemoteEndPoint}] Команда {commands.Command}, ключ {commands.Key}, значение {commands.Value}");
     }
 
-    public async Task DisconnectAsync()
+    public Task DisconnectAsync()
     {
         try
         {
             if (clientSocket.Connected)
             {
                 clientSocket.Shutdown(SocketShutdown.Both);
-                await Task.Delay(100); // Даем время для graceful shutdown
             }
         }
         catch (Exception ex)
@@ -180,5 +173,7 @@ public class ClientHandler(Socket clientSocket)
             clientSocket.Close();
             clientSocket.Dispose();
         }
+
+        return Task.CompletedTask;
     }
 }

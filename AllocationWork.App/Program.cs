@@ -8,14 +8,10 @@ public class Program
 
         try
         {
-            var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSource = new CancellationTokenSource();
 
             // Запуск сервера в фоновом режиме
-            var serverTask = server.StartAsync(cancellationTokenSource.Token);
-
-            // await Task.Delay(3000, cancellationTokenSource.Token);
-
-            // await TestClient.TestAsync();
+            await server.StartAsync(cancellationTokenSource.Token);
 
             Console.WriteLine("Сервер запущен. Нажмите Enter для остановки...");
             Console.ReadLine();
