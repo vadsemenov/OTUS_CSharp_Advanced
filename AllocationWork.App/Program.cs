@@ -4,7 +4,7 @@ public class Program
 {
     static async Task Main(string[] args)
     {
-        using var server = new TcpServer();
+       await using var server = new TcpServer();
 
         try
         {
