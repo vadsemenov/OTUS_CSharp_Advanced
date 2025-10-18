@@ -1,4 +1,7 @@
-﻿namespace HighLoadedCache.App;
+﻿using HighLoadedCache.Infrastructure;
+using HighLoadedCache.Services;
+
+namespace HighLoadedCache.App;
 
 public class Program
 {

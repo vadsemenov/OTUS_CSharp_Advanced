@@ -1,4 +1,6 @@
-﻿namespace HighLoadedCache.App.Tests;
+﻿using HighLoadedCache.Services;
+
+namespace HighLoadedCache.App.Tests;
 
 public class SimpleStoreConcurrencyTests
 {

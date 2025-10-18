@@ -3,8 +3,9 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using HighLoadedCache.Services;
 
-namespace HighLoadedCache.App;
+namespace HighLoadedCache.Infrastructure;
 
 public class TcpServer : IAsyncDisposable
 {

@@ -5,9 +5,13 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.App", "HighLoadedCache.App\HighLoadedCache.App.csproj", "{B2697FF0-6959-42DE-9171-637B339CE893}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.App.Tests", "HighLoadedCache.App.Tests\HighLoadedCache.App.Tests.csproj", "{B2E0104B-FA2E-4EBD-B4DD-306E7F742BDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.Services.Tests", "HighLoadedCache.Services.Tests\HighLoadedCache.Services.Tests.csproj", "{B2E0104B-FA2E-4EBD-B4DD-306E7F742BDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.SocketTestClient", "HighLoadedCache.SocketTestClient\HighLoadedCache.SocketTestClient.csproj", "{357F6D23-8508-4939-97A4-E85761FC9A68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.Services", "HighLoadedCache.Services\HighLoadedCache.Services.csproj", "{2BE6A144-BCA5-46C6-88DD-09916934C384}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.Infrastructure", "HighLoadedCache.Infrastructure\HighLoadedCache.Infrastructure.csproj", "{118E4FA2-B493-40DE-9FCF-B4F1FE988598}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{357F6D23-8508-4939-97A4-E85761FC9A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{357F6D23-8508-4939-97A4-E85761FC9A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{357F6D23-8508-4939-97A4-E85761FC9A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BE6A144-BCA5-46C6-88DD-09916934C384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BE6A144-BCA5-46C6-88DD-09916934C384}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BE6A144-BCA5-46C6-88DD-09916934C384}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BE6A144-BCA5-46C6-88DD-09916934C384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{118E4FA2-B493-40DE-9FCF-B4F1FE988598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{118E4FA2-B493-40DE-9FCF-B4F1FE988598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{118E4FA2-B493-40DE-9FCF-B4F1FE988598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{118E4FA2-B493-40DE-9FCF-B4F1FE988598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
