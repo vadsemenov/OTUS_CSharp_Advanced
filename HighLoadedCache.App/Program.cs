@@ -18,9 +18,9 @@ await host.RunAsync();
 
 await host.WaitForShutdownAsync();
 
-async Task RunTcpServerAsync(IHost host)
+async Task RunTcpServerAsync(IHost hostProvider)
 {
-    await using var server = host.Services.GetService<ITcpServer>();
+    await using var server = hostProvider.Services.GetService<ITcpServer>();
 
     try
     {
