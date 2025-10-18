@@ -1,4 +1,4 @@
-namespace AllocationWork.App.Tests;
+namespace HighLoadedCache.App.Tests;
 
 public class CommandParserTests
 {

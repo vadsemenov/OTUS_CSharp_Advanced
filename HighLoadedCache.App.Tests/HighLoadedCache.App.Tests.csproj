@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AllocationWork.App\AllocationWork.App.csproj" />
+    <ProjectReference Include="..\HighLoadedCache.App\HighLoadedCache.App.csproj" />
   </ItemGroup>
 
   <ItemGroup>

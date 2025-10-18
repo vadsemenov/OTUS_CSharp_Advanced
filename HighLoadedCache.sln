@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllocationWork.App", "AllocationWork.App\AllocationWork.App.csproj", "{B2697FF0-6959-42DE-9171-637B339CE893}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.App", "HighLoadedCache.App\HighLoadedCache.App.csproj", "{B2697FF0-6959-42DE-9171-637B339CE893}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllocationWork.App.Tests", "AllocationWork.App.Tests\AllocationWork.App.Tests.csproj", "{B2E0104B-FA2E-4EBD-B4DD-306E7F742BDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.App.Tests", "HighLoadedCache.App.Tests\HighLoadedCache.App.Tests.csproj", "{B2E0104B-FA2E-4EBD-B4DD-306E7F742BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllocationWork.SocketTestClient", "AllocationWork.SocketTestClient\AllocationWork.SocketTestClient.csproj", "{357F6D23-8508-4939-97A4-E85761FC9A68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLoadedCache.SocketTestClient", "HighLoadedCache.SocketTestClient\HighLoadedCache.SocketTestClient.csproj", "{357F6D23-8508-4939-97A4-E85761FC9A68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

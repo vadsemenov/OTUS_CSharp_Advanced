@@ -1,4 +1,4 @@
-﻿namespace AllocationWork.App;
+﻿namespace HighLoadedCache.App;
 
 public class SimpleStore : IDisposable
 {
