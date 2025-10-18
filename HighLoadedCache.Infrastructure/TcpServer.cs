@@ -2,15 +2,22 @@
 using System.Net;
 using System.Net.Sockets;
 using HighLoadedCache.Services.Abstraction;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HighLoadedCache.Infrastructure;
 
 public class TcpServer : ITcpServer
 {
+    private readonly IServiceScopeFactory _serviceScopeFactory;
     private Socket? _socket;
     private readonly ConcurrentBag<ClientHandler> _connectedClients = new();
     private const string IpAddress = "127.0.0.1";
     private const int Port = 8081;
+
+    public TcpServer(IServiceScopeFactory serviceScopeFactory)
+    {
+        _serviceScopeFactory = serviceScopeFactory;
+    }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -30,7 +37,9 @@ public class TcpServer : ITcpServer
                 {
                     var clientSocket = await _socket.AcceptAsync(cancellationToken);
 
-                    var clientHandler = new ClientHandler(clientSocket);
+                    using var scope = _serviceScopeFactory.CreateScope();
+                    var clientHandler = ActivatorUtilities.CreateInstance<ClientHandler>(scope.ServiceProvider, clientSocket);
+
                     _connectedClients.Add(clientHandler);
 
                     Console.WriteLine(
