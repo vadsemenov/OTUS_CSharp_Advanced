@@ -7,6 +7,7 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <RootNamespace>HighLoadedCache.App.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AllocationWork.App\AllocationWork.App.csproj" />
+    <ProjectReference Include="..\HighLoadedCache.App\HighLoadedCache.App.csproj" />
   </ItemGroup>
 
   <ItemGroup>

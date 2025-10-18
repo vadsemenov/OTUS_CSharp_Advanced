@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HighLoadedCache.Infrastructure\HighLoadedCache.Infrastructure.csproj" />
+    <ProjectReference Include="..\HighLoadedCache.Services\HighLoadedCache.Services.csproj" />
+  </ItemGroup>
+
 </Project>
