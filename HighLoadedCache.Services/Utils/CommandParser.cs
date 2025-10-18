@@ -1,4 +1,4 @@
-﻿namespace HighLoadedCache.Services;
+﻿namespace HighLoadedCache.Services.Utils;
 
 public static class CommandParser
 {

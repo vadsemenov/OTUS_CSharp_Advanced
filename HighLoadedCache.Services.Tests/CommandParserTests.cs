@@ -1,4 +1,5 @@
 using HighLoadedCache.Services;
+using HighLoadedCache.Services.Utils;
 
 namespace HighLoadedCache.App.Tests;
 

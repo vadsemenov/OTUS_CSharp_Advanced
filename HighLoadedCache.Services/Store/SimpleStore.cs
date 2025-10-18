@@ -1,6 +1,8 @@
-﻿namespace HighLoadedCache.Services;
+﻿using HighLoadedCache.Services.Abstraction;
 
-public class SimpleStore : IDisposable
+namespace HighLoadedCache.Services.Store;
+
+public class SimpleStore : ISimpleStore, IDisposable
 {
     private readonly Dictionary<string, byte[]> _store = new();
     private readonly ReaderWriterLockSlim _lock = new();
