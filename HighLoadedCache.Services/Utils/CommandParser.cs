@@ -1,4 +1,4 @@
-﻿namespace AllocationWork.App;
+﻿namespace HighLoadedCache.Services.Utils;
 
 public static class CommandParser
 {
